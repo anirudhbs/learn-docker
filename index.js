@@ -1,6 +1,6 @@
 const express = require('express')
 const client = require('redis').createClient({
-  host: 'redis',
+  host: '127.0.0.1',
   port: '6379'
 })
 
@@ -13,20 +13,18 @@ app.get('/', (req, res) => {
   res.status(200).send('<h2>Hello world!</h2>')
 })
 
-app.get('/set/:key/:val', (req, res) => {
-  const { key, val } = req.params
-  client.set(key, val, (err) => {
+app.get('/inc', (req, res) => {
+  client.incr('quavo', (err) => {
     if (err) {
-      res.send('unable to store')
+      res.send('unable to increase')
     } else {
       res.send(`success`)
     }
   })
 })
 
-app.get('/get/:key', (req, res) => {
-  const { key } = req.params
-  client.get(key, (err, reply) => {
+app.get('/get', (req, res) => {
+  client.get('quavo', (err, reply) => {
     if (err) {
       res.send('unable to fetch')
     } else {
