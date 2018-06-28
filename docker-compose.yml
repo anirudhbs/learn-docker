@@ -1,6 +1,11 @@
 version: '3'
 services:
-  web:
+  node:
     image: learn-docker
     ports:
-      - '8080:8080'
+    - "8080:8080"
+    links:
+    - redis:redis
+  redis:
+    image: redis
+  
