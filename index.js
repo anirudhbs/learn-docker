@@ -1,6 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser')
-const getHash = require('./utils')
 const client = require('redis').createClient({
   host: '127.0.0.1',
   port: '6379'
@@ -10,31 +8,29 @@ const app = express()
 const PORT = 8080
 
 app.use(express.static('public'))
-app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
   res.status(200).send('<h2>Hello world!</h2>')
 })
 
-app.post('/shorten', (req, res) => {
-  const { url } = req.body
-  const hash = getHash()
-  client.set(hash, url, (err) => {
+app.get('/set/:key/:val', (req, res) => {
+  const { key, val } = req.params
+  client.set(key, val, (err) => {
     if (err) {
-      res.send('unable to shorten')
+      res.send('unable to store')
     } else {
-      res.send(`hash is ${hash}`)
+      res.send(`success`)
     }
   })
 })
 
-app.get('/:hash', (req, res) => {
-  const { hash } = req.params
-  client.get(hash, (err, reply) => {
-    if (err || reply === null) {
-      res.send(`url not found`)
+app.get('/get/:key', (req, res) => {
+  const { key } = req.params
+  client.get(key, (err, reply) => {
+    if (err) {
+      res.send('unable to fetch')
     } else {
-      res.send(`url is ${reply}`)
+      res.send(`value is ${reply}`)
     }
   })
 })
