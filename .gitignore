@@ -1,5 +1,4 @@
+.todo
 package-lock.json
 node_modules/
-.todo
-temp.js
-commands.md
+dump.rdb
