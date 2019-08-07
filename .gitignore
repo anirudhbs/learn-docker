@@ -1,4 +1,5 @@
 .todo
 package-lock.json
 node_modules/
-dump.rdb
+.DS_Store
+yarn.lock

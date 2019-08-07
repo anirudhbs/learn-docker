@@ -1,7 +1,3 @@
-# learn-docker
+# Learn Docker
 
-This repository contains code written while experimenting with Docker
-
-### References
-
-- https://docker-curriculum.com
+Playing around with docker
